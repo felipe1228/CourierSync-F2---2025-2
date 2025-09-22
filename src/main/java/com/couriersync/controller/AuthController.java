@@ -7,6 +7,7 @@ import com.couriersync.entity.Usuario;
 import com.couriersync.repository.UsuarioRepository;
 import com.couriersync.service.AuthService;
 import com.couriersync.service.SignUpService;
+import com.couriersync.dto.UsuarioRegistroDTO;
 
 
 @RestController
@@ -35,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Usuario registrarUsuario(@RequestBody com.couriersync.dto.UsuarioRegistroDTO usuarioDTO) {
+    public Usuario registrarUsuario(@RequestBody  UsuarioRegistroDTO usuarioDTO) {
         return signUpService.registrarUsuario(usuarioDTO);
     }
 }

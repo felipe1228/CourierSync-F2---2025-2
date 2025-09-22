@@ -24,6 +24,9 @@ public class SignUpService {
 		if (usuarioRepository.existsByCedula(dto.getCedula())) {
 			throw new IllegalArgumentException("La cédula ya está registrada.");
 		}
+		if (!dto.getContraseña().equals(dto.getConfirmarContraseña())) {
+			throw new IllegalArgumentException("Las contraseñas no coinciden.");
+		}
 		Usuario usuario = new Usuario();
 		usuario.setCedula(dto.getCedula());
 		usuario.setNombre(dto.getNombre());
