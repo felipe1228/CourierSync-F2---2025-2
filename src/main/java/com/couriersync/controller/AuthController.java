@@ -1,12 +1,16 @@
 package com.couriersync.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.couriersync.entity.Usuario;
 import com.couriersync.repository.UsuarioRepository;
 import com.couriersync.service.AuthService;
 import com.couriersync.service.SignUpService;
+
+import jakarta.validation.Valid;
+
 import com.couriersync.dto.UsuarioRegistroDTO;
 
 
@@ -36,7 +40,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Usuario registrarUsuario(@RequestBody  UsuarioRegistroDTO usuarioDTO) {
-        return signUpService.registrarUsuario(usuarioDTO);
+    public ResponseEntity<String> registrarUsuario(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO) {
+        signUpService.registrarUsuario(usuarioDTO);
+        return ResponseEntity.ok("Usuario creado con éxito");
     }
 }
