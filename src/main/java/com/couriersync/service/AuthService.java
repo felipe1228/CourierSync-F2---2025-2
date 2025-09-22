@@ -32,7 +32,6 @@ public class AuthService {
         // Comparar contraseña (hash vs lo que mandó el usuario)
         boolean passwordMatches = passwordEncoder.matches(contraseña, usuario.getContraseña());
 
-
         // Comparar rol
         boolean roleMatches = usuario.getRol() == rol;
 

@@ -68,6 +68,8 @@
 			<version>2.5.0</version> <!-- Use the latest stable version -->
 		</dependency>
 
+		<!-- Eliminada la dependencia de springfox para evitar conflicto con springdoc-openapi -->
+
 	</dependencies>
 
 	<build>
