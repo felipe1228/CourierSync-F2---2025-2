@@ -1,15 +1,20 @@
 package com.couriersync.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "tbl_usuarios")
+@Data
 public class Usuario {
 
     @Id
     private String cedula;
 
-    @Column(name = "nombres", nullable = false)
+    @Column(name = "usuario", nullable = false)
+    private String usuario;
+
+    @Column(name = "nombres", nullable = false, unique = true)
     private String nombre;
 
     @Column(name = "apellidos", nullable = false)
@@ -26,61 +31,5 @@ public class Usuario {
 
     @Column(name = "rol", nullable = false)
     private int rol;
-
-    // Getters y Setters
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public int getRol() {
-        return rol;
-    }
-
-    public void setRol(int rol) {
-        this.rol = rol;
-    }
+    // Getters y Setters generados por Lombok
 }

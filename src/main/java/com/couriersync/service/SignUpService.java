@@ -18,16 +18,20 @@ public class SignUpService {
 	}
 
 	public Usuario registrarUsuario(UsuarioRegistroDTO dto) {
-		if (dto.getContraseña() == null || dto.getContraseña().length() < 12) {
-			throw new IllegalArgumentException("La contraseña debe tener al menos 12 caracteres.");
-		}
 		if (usuarioRepository.existsByCedula(dto.getCedula())) {
 			throw new IllegalArgumentException("La cédula ya está registrada.");
 		}
 		if (!dto.getContraseña().equals(dto.getConfirmarContraseña())) {
 			throw new IllegalArgumentException("Las contraseñas no coinciden.");
 		}
+		if (usuarioRepository.existsByUsuario(dto.getUsuario())) {
+			throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
+		}
+		if (!validarPassword(dto.getContraseña())) {
+			throw new IllegalArgumentException("La contraseña no cumple con los requisitos de seguridad.");
+		}
 		Usuario usuario = new Usuario();
+		usuario.setUsuario(dto.getUsuario());
 		usuario.setCedula(dto.getCedula());
 		usuario.setNombre(dto.getNombre());
 		usuario.setApellido(dto.getApellido());
@@ -39,4 +43,23 @@ public class SignUpService {
 		usuario.setRol(dto.getRol());
 		return usuarioRepository.save(usuario);
 	}
+
+	private boolean validarPassword(String password) {
+    if (password.length() < 12) {
+        return false;
+    }
+
+    int cantidadNumeros = 0;
+    boolean tieneEspecial = false;
+
+    for (char c : password.toCharArray()) {
+		if (Character.isDigit(c)) {
+            cantidadNumeros++;
+        } else if ("!@#$%^&*()_+-={}[]:;\"'<>,.?/\\|".contains(String.valueOf(c))) {
+            tieneEspecial = true;
+        }
+    }
+
+    return cantidadNumeros >= 1 && tieneEspecial;
+}
 }
