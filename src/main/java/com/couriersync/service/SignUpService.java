@@ -18,6 +18,9 @@ public class SignUpService {
 	}
 
 	public Usuario registrarUsuario(UsuarioRegistroDTO dto) {
+		if (dto.getContraseña() == null || dto.getContraseña().length() < 12) {
+			throw new IllegalArgumentException("La contraseña debe tener al menos 12 caracteres.");
+		}
 		Usuario usuario = new Usuario();
 		usuario.setCedula(dto.getCedula());
 		usuario.setNombre(dto.getNombre());
