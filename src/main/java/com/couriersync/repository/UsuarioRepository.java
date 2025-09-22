@@ -7,5 +7,5 @@ import com.couriersync.entity.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Usuario findByCedula(String cedula); 
-    
+    boolean existsByCedula(String cedula);
 }

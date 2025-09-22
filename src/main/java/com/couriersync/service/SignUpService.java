@@ -21,6 +21,9 @@ public class SignUpService {
 		if (dto.getContraseña() == null || dto.getContraseña().length() < 12) {
 			throw new IllegalArgumentException("La contraseña debe tener al menos 12 caracteres.");
 		}
+		if (usuarioRepository.existsByCedula(dto.getCedula())) {
+			throw new IllegalArgumentException("La cédula ya está registrada.");
+		}
 		Usuario usuario = new Usuario();
 		usuario.setCedula(dto.getCedula());
 		usuario.setNombre(dto.getNombre());
