@@ -1,5 +1,7 @@
 package com.couriersync.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,10 +28,20 @@ public class Usuario {
     @Column(name = "celular", nullable = false, unique = true)
     private String celular;
 
+    
     @Column(name = "contraseña", nullable = false)
+    @JsonIgnore
     private String contraseña;
 
     @Column(name = "rol", nullable = false)
     private int rol;
+
+    @Column(name = "mfa_estado", nullable = false)
+    private boolean mfaEnabled; // ¿El usuario tiene MFA activo? 
+    
+    @Column(name = "mfa_secreto", length = 128)
+    @JsonIgnore
+    private String mfaSecret;       // Clave secreta cifrada para TOTP
+
     // Getters y Setters generados por Lombok
 }

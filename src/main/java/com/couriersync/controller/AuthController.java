@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.servlet.http.Cookie;
 
+import com.couriersync.dto.UsuarioLoginDTO;
 import com.couriersync.dto.UsuarioRegistroDTO;
 
 
@@ -37,11 +38,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username,
-                        @RequestParam String contraseña,
-                        @RequestParam Integer rol,
-                        HttpServletRequest request) {
-        boolean success = authService.authenticate(username, contraseña, rol);
+    public ResponseEntity<String> login(@Valid @RequestBody UsuarioLoginDTO usuarioLoginDTO ,
+        HttpServletRequest request) {
+        boolean success = authService.authenticate( usuarioLoginDTO.getUsername(),
+            usuarioLoginDTO.getContraseña(),
+            usuarioLoginDTO.getRol());
        
          if (!success) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
@@ -49,8 +50,8 @@ public class AuthController {
 
         // Crear o recuperar la sesión y guardar info del usuario
         HttpSession session = request.getSession(true); // crea sesión si no existe
-        session.setAttribute("Username", username);
-        session.setAttribute("rol", rol);
+        session.setAttribute("Username", usuarioLoginDTO.getUsername());
+        session.setAttribute("rol", usuarioLoginDTO.getRol());
         session.setMaxInactiveInterval(30 * 60); // 30 minutos
         return ResponseEntity.ok("Login successful");
     }
