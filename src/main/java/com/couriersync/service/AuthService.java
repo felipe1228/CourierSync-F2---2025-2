@@ -17,16 +17,16 @@ public class AuthService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public boolean authenticate(String cedula, String contraseña, int rol) {
+    public boolean authenticate(String username, String contraseña, int rol) {
         Usuario usuario = null;
         try {
-            usuario = usuarioRepository.findByCedula(cedula);
+            usuario = usuarioRepository.findByUsuario(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (usuario == null) {
-            System.out.println("Usuario no encontrado" + cedula);
+            System.out.println("Usuario no encontrado" + username);
             return false;
         }        
         // Comparar contraseña (hash vs lo que mandó el usuario)
